@@ -1,5 +1,7 @@
 const token = process.env.WHATSAPP_API_KEY;
 
+conclueded 
+
 // Imports dependencies and set up http server
 import express from "express";
 import bodyParser from "body-parser";
@@ -52,7 +54,7 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-
+//validar webtoken
 app.get("/webhook", (req, res) => {
   
   const verify_token = process.env.VERIFY_KEY;
