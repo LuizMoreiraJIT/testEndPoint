@@ -1,21 +1,24 @@
-const token = process.env.WHATSAPP_API_KEY;
-
-conclueded 
-
 // Imports dependencies and set up http server
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
+import dotenv from "dotenv"
+
+dotenv.config()
+
 const app = express().use(bodyParser.json()); // creates express http server
 
+const verify_token = process.env.VERIFY_KEY;
+const token = process.env.WHATSAPP_API_KEY;
+const port = process.env.PORT
+
+// console.log(verify_token,token,port)
+
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
+app.listen(port, () => console.log("webhook is listening on port: ",port));
 
 // Accepts POST requests at /webhook endpoint
 app.post("/webhook", (req, res) => {
-  // Parse the request body from the POST
-  let body = req.body;
-
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
 
@@ -49,6 +52,7 @@ app.post("/webhook", (req, res) => {
     }
     res.sendStatus(200);
   } else {
+    console.log("req.body is not an object");
     // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
   }
@@ -56,8 +60,6 @@ app.post("/webhook", (req, res) => {
 
 //validar webtoken
 app.get("/webhook", (req, res) => {
-  
-  const verify_token = process.env.VERIFY_KEY;
 
   // Parse params from the webhook verification request
   let mode = req.query["hub.mode"];
