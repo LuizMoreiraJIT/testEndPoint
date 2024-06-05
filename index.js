@@ -19,7 +19,8 @@ app.listen(port, () => console.log("webhook is listening on port: ",port));
 
 // Accepts POST requests at /webhook endpoint
 app.post("/webhook", (req, res) => {
-  // Check the Incoming webhook message
+  try {
+    // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
 
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
@@ -55,6 +56,9 @@ app.post("/webhook", (req, res) => {
     console.log("req.body is not an object");
     // Return a '404 Not Found' if event is not from a WhatsApp API
     res.sendStatus(404);
+  }
+  } catch (error) {
+    res.sendStatus(500)
   }
 });
 
