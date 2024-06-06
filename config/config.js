@@ -1,6 +1,6 @@
 import dotenv from "dotenv"
 
-dotenv.config({path: "../.env"})
+dotenv.config()
 
 const config = {
     verify_token : process.env.VERIFY_KEY,

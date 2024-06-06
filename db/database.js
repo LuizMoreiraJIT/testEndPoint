@@ -12,8 +12,10 @@ const client = new Client({
 
 async function connectDatabase() {
   try {
-    await client.connect();
-    console.log("Conectado ao banco de dados PostgreSQL");
+    await client.connect().then(() => {
+      console.log("Conectado ao banco de dados PostgreSQL");
+    });
+    
   } catch (error) {
     console.error("Erro ao conectar ao banco de dados:", error);
     process.exit(1); // Exit process with failure
@@ -28,6 +30,7 @@ async function saveDatabase(msg, id, from) {
   const values = [id, msg, from];
 
   try {
+    connectDatabase();
     await client.query(query, values);
     console.log("Conversa cadastrada com sucesso!");
     disconnect();
@@ -41,8 +44,5 @@ async function disconnect() {
     console.log("Banco de dados desconectado");
   });
 }
-
-// Connect to the database when the module is loaded
-connectDatabase();
 
 export default saveDatabase;

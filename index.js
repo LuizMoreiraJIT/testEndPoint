@@ -7,8 +7,6 @@ import saveDatabase from "./db/database.js";
 
 const app = express().use(bodyParser.json()); // creates express http server
 
-// console.log(verify_token,token,port)
-
 // Sets server port and logs message on success
 app.listen(config.port, () =>
   console.log("webhook is listening on port: ", config.port)
@@ -52,7 +50,7 @@ app.post("/webhook", (req, res) => {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
 
         sendMessage(msg_body, phone_number_id, from);
-        saveDatabase(msg_body, phone_number_id, from);
+        // saveDatabase(msg_body, phone_number_id, from);
       }
       res.sendStatus(200);
     } else {
